@@ -1,0 +1,19 @@
+data class RegisterRequest(val volunteer_name: String, val household_name: String, val phone_number: String, val gender: String, val age: Int, val city_village: String, val address: String, val pincode: String, val action: String = "register")
+data class LoginRequest(val household_name: String, val phone_number: String,val action: String = "login")
+data class LambdaResponse( // Add LambdaResponse data class
+    val statusCode: Int,
+    val body: String
+)
+data class ResponseBody( // Define ResponseBody data class
+    val message: String,
+    val data: Any? = null
+)
+
+interface ApiService {
+    @Headers("Content-Type: application/json")
+    @POST("register")
+    fun register(@Body request: RegisterRequest): Call<ResponseBody> // Change to LambdaResponse
+    @Headers("Content-Type: application/json")
+    @POST("login")
+   suspend fun login (@Body requestBody: RequestBody): Response<LoginResponse>
+}

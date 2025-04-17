@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/splashLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/white"
+    android:padding="24dp">
+
+    <!-- Main App Logo -->
+
+    <!-- Powered by section -->
+    <ImageView
+        android:id="@+id/mainLogo"
+        android:layout_width="430dp"
+        android:layout_height="514dp"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="splash_logo"
+        android:src="@drawable/splash_logo" />
+
+    <TextView
+        android:id="@+id/poweredByText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Powered by"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginBottom="8dp"/>
+
+    <ImageView
+        android:id="@+id/companyLogo"
+        android:layout_width="260dp"
+        android:layout_height="100dp"
+        android:contentDescription="prism_logo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/prism_logo" />
+</LinearLayout>

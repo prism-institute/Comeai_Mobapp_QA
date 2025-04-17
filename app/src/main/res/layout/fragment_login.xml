@@ -4,49 +4,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.theme.LoginFragment">
+    android:layout_height="match_parent">
 
+    <!-- Proper Header Bar with Title and Logo inside -->
+
+    <!-- Volunteer Name -->
+
+    <!-- Phone Number -->
+
+    <!-- Login Button -->
     <EditText
         android:id="@+id/etHouseholdName"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#800080"
         android:hint="Volunteer Name"
         android:padding="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"/>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="125dp" />
 
     <EditText
         android:id="@+id/etPhoneNumber"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#800080"
         android:hint="Phone Number"
         android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@id/etHouseholdName"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"/>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etHouseholdName" />
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Login"
-        app:layout_constraintTop_toBottomOf="@id/etPhoneNumber"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:text="LOGIN"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"/>
-
-    <Button
-        android:id="@+id/btnNewHousehold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New Household? Register"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"/>
+        app:layout_constraintTop_toBottomOf="@id/etPhoneNumber" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

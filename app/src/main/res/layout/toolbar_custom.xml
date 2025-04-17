@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/customToolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+	android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="center_vertical">
+
+        <!-- Fragment title on the left -->
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <!-- Logo aligned to the right -->
+        <ImageView
+            android:id="@+id/toolbarLogo"
+            android:layout_width="94dp"
+            android:layout_height="52dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/splash_logo" />
+    </RelativeLayout>
+</androidx.appcompat.widget.Toolbar>

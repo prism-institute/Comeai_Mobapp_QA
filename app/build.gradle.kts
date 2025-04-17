@@ -78,6 +78,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
     implementation(libs.annotations)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.espresso.core)
 
     // ✅ Testing Libraries
     testImplementation(libs.junit)

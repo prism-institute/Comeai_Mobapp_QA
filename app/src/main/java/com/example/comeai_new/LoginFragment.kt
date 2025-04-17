@@ -1,17 +1,15 @@
 package com.example.comeai_new
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.view.*
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.comeai_new.network.ApiClient
+import com.example.comeai_new.models.LoginResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,107 +19,125 @@ import org.json.JSONObject
 
 class LoginFragment : Fragment() {
 
+    private lateinit var phoneNumberEditText: EditText
+    private lateinit var btnLogin: Button
+
+    private val PREFS_NAME = "volunteer_cache"
+    private val KEY_VOLUNTEERS = "volunteer_phone_numbers"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_login, container, false)
-    }
+    ): View = inflater.inflate(R.layout.fragment_login, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val toolbarTitle = requireActivity().findViewById<TextView>(R.id.toolbarTitle)
+        toolbarTitle?.text = "Login"
 
-        val phoneNumberEditText = view.findViewById<EditText>(R.id.etPhoneNumber)
-        val btnLogin = view.findViewById<Button>(R.id.btnLogin)
-        val btnNewHousehold = view.findViewById<Button>(R.id.btnNewHousehold)
+        phoneNumberEditText = view.findViewById(R.id.etPhoneNumber)
+        btnLogin = view.findViewById(R.id.btnLogin)
 
         btnLogin.setOnClickListener {
             val phoneNumber = phoneNumberEditText.text.toString().trim()
-            if (phoneNumber.isEmpty() || phoneNumber.length != 10 || !phoneNumber.matches("\\d{10}".toRegex())) {
+            if (phoneNumber.isEmpty() || !phoneNumber.matches(Regex("\\d{10}"))) {
                 showToast("Enter a valid 10-digit phone number")
                 return@setOnClickListener
             }
 
-
-            Log.d("LoginFragment", "Phone Number Entered: $phoneNumber")
-
-            val jsonObject = JSONObject().apply {
-                put("action", "login")
-                put("phone_number", phoneNumber)
+            if (isOnline(requireContext())) {
+                loginUserOnline(phoneNumber)
+            } else {
+                loginUserOffline(phoneNumber)
             }
-
-            val requestBody = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
-
-            loginUser(requestBody)
-        }
-
-        btnNewHousehold.setOnClickListener {
-            val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
-            findNavController().navigate(action)
         }
     }
 
-    private fun loginUser(requestBody: okhttp3.RequestBody) {
+    private fun loginUserOnline(phoneNumber: String) {
+        val jsonObject = JSONObject().apply {
+            put("action", "volunteer_login")
+            put("phone_number", phoneNumber)
+        }
+
+        val requestBody = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
+
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val response = ApiClient.instance.login(requestBody)
 
                 withContext(Dispatchers.Main) {
-                    Log.d("LoginFragment", "Response Code: ${response.code()}")
-                    Log.d("LoginFragment", "Raw Response: ${response.raw()}")
-
                     if (response.isSuccessful) {
                         val loginResponse = response.body()
-                        Log.d("LoginFragment", "Parsed LoginResponse: $loginResponse")
-
-                        if (loginResponse?.message == "Login successful" && loginResponse.data != null) {
+                        if (loginResponse?.message == "Volunteer login successful" &&
+                            loginResponse.volunteerId != null
+                        ) {
                             showToast("Login Successful!")
-                            navigateToNextScreen()
+
+                            cacheVolunteerPhone(phoneNumber)
+
+                            val bundle = Bundle().apply {
+                                putString("volunteer_phone_number", phoneNumber)
+                            }
+                            findNavController().navigate(R.id.action_loginFragment_to_membershipFragment, bundle)
                         } else {
                             showToast("Invalid Credentials!")
                         }
                     } else {
-                        val errorBody = response.errorBody()?.string()
-                        Log.e("LoginFragment", "Error JSON: $errorBody")
-                        handleErrorResponse(errorBody)
+                        handleErrorResponse(response.errorBody()?.string())
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Log.e("LoginFragment", "Exception: ${e.message}")
-                    showToast("Exception: ${e.message}")
+                    showToast("Error: ${e.message}")
                 }
             }
         }
+    }
+
+    private fun loginUserOffline(phoneNumber: String) {
+        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val cachedSet = prefs.getStringSet(KEY_VOLUNTEERS, emptySet())
+
+        if (cachedSet?.contains(phoneNumber) == true) {
+            showToast("Offline Login Successful!")
+
+            val bundle = Bundle().apply {
+                putString("volunteer_phone_number", phoneNumber)
+            }
+            findNavController().navigate(R.id.action_loginFragment_to_membershipFragment, bundle)
+        } else {
+            showToast("No offline record found. Please login once online.")
+        }
+    }
+
+    private fun cacheVolunteerPhone(phoneNumber: String) {
+        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val set = prefs.getStringSet(KEY_VOLUNTEERS, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+        set.add(phoneNumber)
+        prefs.edit().putStringSet(KEY_VOLUNTEERS, set).apply()
     }
 
 
     private fun handleErrorResponse(errorBody: String?) {
-        lifecycleScope.launch(Dispatchers.Main) {
-            if (!errorBody.isNullOrEmpty()) {
-                try {
-                    val jsonObject = JSONObject(errorBody)
-                    val errorMessage = jsonObject.optString("message", "Login failed. Try again.")
-                    showToast(errorMessage)
-                } catch (e: Exception) {
-                    showToast("Error parsing response")
-                }
-            } else {
-                showToast("Unknown error occurred.")
+        if (!errorBody.isNullOrEmpty()) {
+            try {
+                val jsonObject = JSONObject(errorBody)
+                val errorMessage = jsonObject.optString("message", "Login failed. Try again.")
+                showToast(errorMessage)
+            } catch (e: Exception) {
+                showToast("Error parsing response")
             }
+        } else {
+            showToast("Unknown error occurred.")
         }
     }
 
     private fun showToast(message: String) {
-        lifecycleScope.launch(Dispatchers.Main) {
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        }
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun navigateToNextScreen() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
-            findNavController().navigate(action)
-        }
+    private fun isOnline(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as android.net.ConnectivityManager
+        return cm.activeNetworkInfo?.isConnectedOrConnecting == true
     }
 }

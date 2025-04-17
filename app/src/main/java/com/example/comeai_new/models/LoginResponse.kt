@@ -3,8 +3,9 @@ package com.example.comeai_new.models
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
-    @SerializedName("message") val message: String,
-    @SerializedName("data") val data: VolunteerData?
+    val message: String?,
+    @SerializedName("volunteer_id") val volunteerId: Int? = null,
+    @SerializedName("volunteer_data") val volunteerData: VolunteerData? = null
 )
 
 data class VolunteerData(

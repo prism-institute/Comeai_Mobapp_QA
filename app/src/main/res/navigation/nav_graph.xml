@@ -2,35 +2,18 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
 
-    <!-- Login Screen -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.comeai_new.LoginFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_login">
-
+        android:label="Login">
         <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-
-        <action
-            android:id="@+id/action_loginFragment_to_questionnaireFragment"
-            app:destination="@id/questionnaireFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            android:id="@+id/action_loginFragment_to_membershipFragment"
+            app:destination="@id/membershipFragment" />
     </fragment>
-	
 
-
-    <!-- Register Screen -->
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.comeai_new.RegisterFragment"
@@ -38,17 +21,14 @@
         tools:layout="@layout/fragment_register">
 
         <action
-		
-    android:id="@+id/action_registerFragment_to_questionnaireFragment"
-    app:destination="@id/questionnaireFragment" 
-            
+            android:id="@+id/action_registerFragment_to_questionnaireFragment"
+            app:destination="@id/questionnaireFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
-    <!-- Questionnaire Screen -->
     <fragment
         android:id="@+id/questionnaireFragment"
         android:name="com.example.comeai_new.QuestionnaireFragment"
@@ -62,6 +42,30 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+			
+			<action
+    android:id="@+id/action_questionnaireFragment_to_membershipFragment"
+    app:destination="@id/membershipFragment" />
+
     </fragment>
+
+
+    <fragment
+        android:id="@+id/membershipFragment"
+        android:name="com.example.comeai_new.MembershipFragment"
+        android:label="Membership"
+        tools:layout="@layout/fragment_membership">
+        <action
+		
+		
+            android:id="@+id/action_membershipFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_membershipFragment_to_questionnaireFragment"
+            app:destination="@id/questionnaireFragment" />
+    
+	
+	
+	</fragment>
 
 </navigation>

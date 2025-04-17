@@ -2,14 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-
+    <!-- Permissions -->
+	
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 
     <application
-	
-        android:usesCleartextTraffic="true" 
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,20 +21,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Comeai_new"
         tools:targetApi="31">
-	
 
-
+        <!-- ✅ SplashActivity as the launcher -->
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Comeai_new">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- ✅ MainActivity without duplicate -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Comeai_new" />
+			
+			
+		<receiver android:name=".ConnectivityReceiver"
+    android:exported="false">
+    <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+    </intent-filter>
+</receiver>
+
+
     </application>
 
 </manifest>

@@ -1,86 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView 
+<androidx.constraintlayout.widget.ConstraintLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+    <!-- Fixed Header -->
+    <RelativeLayout
+        android:id="@+id/headerBar"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="#ffff"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <EditText
-            android:id="@+id/etCityVillage"
+    <!-- Scrollable Form Content -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/headerBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="City/Village"
-            android:padding="10dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp"/>
+            android:padding="16dp">
 
-        <EditText
-            android:id="@+id/etPincode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Pincode"
-            android:inputType="text"
-            android:padding="10dp"
-            app:layout_constraintTop_toBottomOf="@id/etCityVillage"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="10dp"/>
+            <EditText
+                android:id="@+id/etMembershipId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Membership ID"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        
+            <EditText
+                android:id="@+id/etCityVillage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="City/Village"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etMembershipId" />
 
+            <EditText
+                android:id="@+id/etPincode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Pincode"
+                android:inputType="number"
+                android:padding="10dp"
+                app:layout_constraintTop_toBottomOf="@id/etCityVillage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <EditText
-            android:id="@+id/etNumPeople"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Number of People in Household"
-            android:inputType="number"
-            android:padding="10dp"
-            app:layout_constraintTop_toBottomOf="@id/etPincode"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="10dp"/>
+            <EditText
+                android:id="@+id/etNumPeople"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Number of People in Household"
+                android:inputType="number"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etPincode" />
 
-        <!-- Dynamic fields container for Members -->
-        <LinearLayout
-            android:id="@+id/dynamicFieldsContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/etNumPeople"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="10dp"/>
+            <LinearLayout
+                android:id="@+id/dynamicFieldsContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/etNumPeople"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Progress Bar -->
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/dynamicFieldsContainer"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="10dp"/>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/dynamicFieldsContainer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Register Button -->
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Register"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/progressBar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:layout_marginTop="28dp"
+                app:layout_constraintTop_toBottomOf="@id/progressBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

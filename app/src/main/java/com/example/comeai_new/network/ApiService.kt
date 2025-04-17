@@ -1,62 +1,74 @@
 package com.example.comeai_new.network
 
 import com.example.comeai_new.models.LoginResponse
-import com.example.comeai_new.models.RegisterResponse
+import com.example.comeai_new.models.RegisterHouseholdRequest
+import com.example.comeai_new.models.RegisterHouseholdResponse
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
+
 data class Member(
     val age: Int,
     val gender: String
 )
 
-
-
-// Updated RegisterRequest with correct fields
+// Register request model
 data class RegisterRequest(
-   // val household_name: String,
-   // val phone_number: String,
     val city_village: String,
-    //val address: String,
     val pincode: String,
-    val num_people: Int,       // Number of people in household
-    val members: List<Member> ,
-   // val latitude: Double,      // Latitude of location
-   // val longitude: Double,     // Longitude of location
+    val num_people: Int,
+    val members: List<Member>,
     val action: String = "register"
 )
 
-// Updated LoginRequest (unchanged)
+// Login request model
 data class LoginRequest(
-
     val phone_number: String,
     val action: String = "login"
 )
 
-// Standardized LambdaResponse
-data class LambdaResponse(
-    val statusCode: Int,
-    val body: String
-)
-
-// Define ResponseBody if needed
+// Generic Lambda response body
 data class ResponseBody(
     val message: String,
     val data: Any? = null
+)
+
+
+data class MembershipListResponse(
+    val message: String,
+    val data: List<String>
 )
 
 interface ApiService {
 
     @Headers("Content-Type: application/json")
     @POST("register")
-    fun register(@Body request: RegisterRequest): Call<RegisterResponse> // Changed Response type
+    fun registerHousehold(@Body request: RegisterHouseholdRequest): Call<RegisterHouseholdResponse>
 
     @Headers("Content-Type: application/json")
     @POST("login")
     suspend fun login(@Body requestBody: RequestBody): Response<LoginResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(".")
+    suspend fun checkMembership(@Body requestBody: RequestBody): Response<ResponseBody>
+
+    @Headers("Content-Type: application/json")
+    @POST(".")
+    suspend fun submitResponse(@Body requestBody: RequestBody): Response<ResponseBody>
+
+    @Headers("Content-Type: application/json")
+    @POST(".")
+    suspend fun registerOfflineHousehold(@Body requestBody: RequestBody): Response<ResponseBody>
+
+    @Headers("Content-Type: application/json")
+    @POST(".")
+    suspend fun getAllMembershipIds(@Body requestBody: RequestBody): Response<MembershipListResponse>
+
+
+
+
 }
-
-

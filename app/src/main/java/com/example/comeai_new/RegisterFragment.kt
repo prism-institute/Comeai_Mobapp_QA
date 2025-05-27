@@ -35,7 +35,7 @@ class RegisterFragment : Fragment() {
     private var longitude: Double? = null
     private val membershipPrefs = "membership_cache"
     private val membershipKey = "membership_ids"
-
+    private var volunteerName: String = ""
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
@@ -47,14 +47,19 @@ class RegisterFragment : Fragment() {
 
         requireActivity().findViewById<TextView>(R.id.toolbarTitle)?.text = "New Household"
 
-        val membershipId = view.findViewById<EditText>(R.id.etMembershipId)
+        val memIdFromBundle = arguments?.getString("membership_id") ?: ""
+        val membershipIdEditText = view.findViewById<EditText>(R.id.etMembershipId)
+        membershipIdEditText.setText(memIdFromBundle)
+        membershipIdEditText.isEnabled = false  // Optional: make it non-editable to avoid re-entry
         val cityVillage = view.findViewById<EditText>(R.id.etCityVillage)
         val pincode = view.findViewById<EditText>(R.id.etPincode)
         val numPeople = view.findViewById<EditText>(R.id.etNumPeople)
         val btnRegister = view.findViewById<Button>(R.id.btnRegister)
         val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
         val dynamicFieldsContainer = view.findViewById<LinearLayout>(R.id.dynamicFieldsContainer)
-
+        val volunteerName = arguments?.getString("volunteer_name") ?: ""
+     //   val volunteerName = arguments?.getString("volunteer_name")
+        Log.d("RegisterFragment", "Volunteer Name: $volunteerName")
         val volunteerPhoneNumber = arguments?.getString("volunteer_phone_number") ?: return
 
         numPeople.setOnEditorActionListener { _, _, _ ->
@@ -78,7 +83,13 @@ class RegisterFragment : Fragment() {
         getLocation()
 
         btnRegister.setOnClickListener {
-            val memId = membershipId.text.toString().trim()
+
+            if (latitude == null || longitude == null) {
+                showLocationFetchingDialog()
+                getLocation() // Retry getting location
+                return@setOnClickListener
+            }
+            val memId = memIdFromBundle
             val members = mutableListOf<Member>()
 
             for (i in 0 until dynamicFieldsContainer.childCount step 2) {
@@ -111,7 +122,8 @@ class RegisterFragment : Fragment() {
                 members = members,
                 phone_number = volunteerPhoneNumber,
                 latitude = latitude,
-                longitude=longitude
+                longitude=longitude,
+                volunteer_name = volunteerName  // ✅ add this line
             )
 
             progressBar.visibility = View.VISIBLE
@@ -129,7 +141,7 @@ class RegisterFragment : Fragment() {
                         saveOfflineRequest(request)
                         cacheMembershipId(memId)
                         Toast.makeText(requireContext(), "Saved offline", Toast.LENGTH_SHORT).show()
-                        navigateToQuestionnaire(memId, volunteerPhoneNumber)
+                        navigateToQuestionnaire(memId, volunteerPhoneNumber,volunteerName )
                     }
                 }
             }
@@ -151,7 +163,7 @@ class RegisterFragment : Fragment() {
                     if (response.isSuccessful) {
                         cacheMembershipId(request.membership_id)
                         Toast.makeText(requireContext(), "Registered: ${request.membership_id}", Toast.LENGTH_SHORT).show()
-                        navigateToQuestionnaire(request.membership_id, request.phone_number)
+                        navigateToQuestionnaire(request.membership_id, request.phone_number, request.volunteer_name)
                     } else {
                         Toast.makeText(requireContext(), "Failed: ${response.message()}", Toast.LENGTH_SHORT).show()
                     }
@@ -204,7 +216,25 @@ class RegisterFragment : Fragment() {
             Log.e("RegisterFragment", "Sync failed: ${e.message}")
         }
     }
+    private fun showLocationFetchingDialog() {
+        val progressBar = ProgressBar(requireContext()).apply {
+            isIndeterminate = true
+        }
 
+        val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        builder.setTitle("Fetching Location...")
+        builder.setView(progressBar)
+        builder.setMessage("Please wait a few seconds while we fetch your current location.")
+        builder.setCancelable(true) // Optional: Allow user to cancel if they want
+
+        val dialog = builder.create()
+        dialog.show()
+
+        // Auto-close after 2 seconds (optional)
+        progressBar.postDelayed({
+            dialog.dismiss()
+        }, 2000)
+    }
     private fun cacheMembershipId(memId: String) {
         val prefs = requireContext().getSharedPreferences(membershipPrefs, Context.MODE_PRIVATE)
         val ids = prefs.getStringSet(membershipKey, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
@@ -212,10 +242,11 @@ class RegisterFragment : Fragment() {
         prefs.edit().putStringSet(membershipKey, ids).apply()
     }
 
-    private fun navigateToQuestionnaire(membershipId: String, phoneNumber: String) {
+    private fun navigateToQuestionnaire(membershipId: String, phoneNumber: String, volunteerName: String) {
         val bundle = Bundle().apply {
             putString("membership_id", membershipId)
             putString("phone_number", phoneNumber)
+            putString("volunteer_name",volunteerName)
         }
         findNavController().navigate(R.id.action_registerFragment_to_questionnaireFragment, bundle)
     }
@@ -226,17 +257,36 @@ class RegisterFragment : Fragment() {
     }
 
     private fun getLocation() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
             return
         }
 
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-            location?.let {
-                latitude = it.latitude
-                longitude = it.longitude
+            if (location != null) {
+                latitude = location.latitude
+                longitude = location.longitude
+                Log.d("LocationCheck", "Location fetched successfully: $latitude, $longitude")
+            } else {
+                // Request new location if last location is null
+                fusedLocationClient.getCurrentLocation(
+                    com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY,
+                    null
+                ).addOnSuccessListener { newLocation ->
+                    newLocation?.let {
+                        latitude = it.latitude
+                        longitude = it.longitude
+                        Log.d("LocationCheck", "New location fetched: $latitude, $longitude")
+                    } ?: run {
+                        Log.d("LocationCheck", "Location is null even after requesting")
+                    }
+                }
             }
         }
-    }
-}
+    }}
+
 

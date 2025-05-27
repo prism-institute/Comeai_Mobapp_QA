@@ -1,48 +1,84 @@
 [
-  {
+{
+  "question_id": 91,
+  "english":"How secure you feel  in these six areas (food)?",
+  "assamese":"এই ছটা ক্ষেত্ৰত আপুনি কিমান নিৰাপদ অনুভৱ কৰে (খাদ্য)?"
+},
+
+{
+  "question_id": 92,
+  "english":"How secure you feel  in these six areas (health)?",
+  "assamese":"এই ছটা ক্ষেত্ৰত আপুনি কিমান নিৰাপদ অনুভৱ কৰে (স্বাস্থ্য)?"
+},
+
+{
+  "question_id": 93,
+  "english":"How secure you feel  in these six areas (environment)?",
+  "assamese":"এই ছটা ক্ষেত্ৰত আপুনি কিমান নিৰাপদ অনুভৱ কৰে (পৰিৱেশ)?"
+},
+
+{
+  "question_id": 94,
+  "english":"How secure you feel  in these six areas (financial)?",
+  "assamese":"এই ছটা ক্ষেত্ৰত আপুনি কিমান নিৰাপদ অনুভৱ কৰে (অৰ্থনৈতিক)?"
+},
+
+{
+  "question_id": 95,
+  "english":"How secure you feel  in these six areas (shelter)?",
+  "assamese":"এই ছটা ক্ষেত্ৰত আপুনি কিমান নিৰাপদ অনুভৱ কৰে (আশ্ৰয়)?"
+},
+
+{
+  "question_id": 96,
+  "english":"How secure you feel  in these six areas (gender)?",
+  "assamese":"এই ছটা ক্ষেত্ৰত আপুনি কিমান নিৰাপদ অনুভৱ কৰে (লিংগ)?"
+},
+
+ {
     "question_id": 1,
     "english": "Are you able to provide three meals a day for yourself and your family?",
-    "assamese": "আপুনি আৰু আপোনাৰ পৰিয়ালৰ বাবে এদিনত তিনি বাৰ ভোজন যোগান ধৰিব পাৰে নে?"
+    "assamese": "আপোনাৰ পৰিয়ালৰ বাবে আপুনি এদিনত তিনি বাৰ খাদ্য় যোগান ধৰিব পাৰেনে?"
   },
   {
     "question_id": 2,
     "english": "Are you able to pay for buying food and groceries that you need from the market?",
-    "assamese": "আপুনি বজাৰৰ পৰা প্ৰয়োজনীয় খাদ্য আৰু সামগ্ৰী কিনিবলৈ সক্ষম নে?"
+    "assamese": "আপুনি বজাৰৰ পৰা প্ৰয়োজনীয় খাদ্য আৰু সামগ্ৰী কিনিবলৈ সক্ষম হয় নে?"
   },
   {
     "question_id": 3,
     "english": "Do you have to travel long distances or spend long times to get to local food market?",
-    "assamese": "স্থানীয় বজাৰলৈ যাবলৈ আপুনি দূৰলৈ যাত্ৰা কৰিব লগা হয় নে বা বহু সময় খৰচ হয় নে?"
+    "assamese": "আপুনি স্থানীয় বজাৰলৈ যাবলৈ হলে দূৰলৈ যাব লগা হয় নেকি বা সময় অপচয় হয় নেকি?"
   },
   {
     "question_id": 4,
     "english": "Do you lose food to spoilage due to inadequate storage facilities?",
-    "assamese": "অযথাযথ সঁচল ব্যৱস্থাৰ বাবে আপুনি খাদ্য নষ্ট কৰে নে?"
+    "assamese": "ভাল খাদ্য় সংৰক্ষ ব্যৱস্থা নথকাৰ বাবে আপুনি খাদ্য নষ্ট কৰে নেকি?"
   },
   {
     "question_id": 5,
     "english": "Are you able to grow variety of crops for your own consumption?",
-    "assamese": "নিজৰ ব্যৱহাৰৰ বাবে আপুনি নানা ধৰণৰ শস্য উৎপাদন কৰিবলৈ সক্ষম নে?"
+    "assamese": "আপুনি নিজৰ ব্যৱহাৰৰ বাবে বিভিন্ন ধৰণৰ শস্য উৎপাদন কৰিবলৈ সক্ষম হয়নে?"
   },
   {
     "question_id": 6,
     "english": "Are you aware of or have your or anyone in your family been advised on your nutritional needs?",
-    "assamese": "আপুনি বা আপোনাৰ পৰিয়ালৰ কাৰোবাক পুষ্টিৰ প্ৰয়োজনীয়তা সম্পৰ্কে পৰামৰ্শ দিয়া হৈছে নে?"
+    "assamese": "আপোনাৰ পৰিয়ালৰ কাৰোবাক পুষ্টিৰ প্ৰয়োজনীয়তা সম্পৰ্কে পৰামৰ্শ দিয়া হৈছে নেকি?"
   },
   {
     "question_id": 7,
     "english": "Are there enough local breeds in your livestock/fish/poultry that are eaten by you/your community?",
-    "assamese": "আপোনাৰ বা আপোনাৰ সম্প্ৰদায়ৰ খাদ্যত ব্যৱহৃত পৰ্যাপ্ত স্থানীয় জাতৰ গৰু-মাছ-মুৰ্গী আছে নে?"
+    "assamese": "আপোনাৰ সম্প্ৰদায়ত বা আপোনাৰ  ব্যৱহৃত খাদ্যত পৰ্যাপ্ত  স্থানীয়  জাতৰ ছাগলী-মাছ-মুৰ্গী আছেনে?"
   },
   {
     "question_id": 8,
     "english": "Do you have frequent diarrhoea and stomach related illness in the community?",
-    "assamese": "আপোনাৰ সম্প্ৰদায়ত পেটৰ বিষ বা জোৱাৰৰ অসুখ ঘন ঘন দেখা পোৱা যায় নে?"
+    "assamese": "আপোনাৰ সম্প্ৰদায়ত পেটৰ বিষ বা ডায়েৰিয়া অসুখ ঘনে ঘনে দেখা পোৱা যায় নেকি?"
   },
   {
     "question_id": 9,
     "english": "Do you fall ill often due to the food that you eat?",
-    "assamese": "আপুনি যি খাদ্য গ্ৰহণ কৰে তাৰ ফলত আপুনি ঘন ঘন অসুস্থ হয় নে?"
+    "assamese": "আপুনি যি খাদ্য গ্ৰহণ কৰে তাৰ ফলত আপুনি ঘনে ঘনে অসুস্থ হয় নেকি?"
   },
   {
     "question_id": 10,
@@ -52,67 +88,67 @@
   {
     "question_id": 11,
     "english": "Do your children often  lack energy and take long to recover from common illnesses like cold, fever, etc.?",
-    "assamese": "আপোনাৰ সন্তানসকলে সাধাৰণ ৰোগত সুস্থ হ’বলৈ অধিক সময় লয় নে?"
+    "assamese": "আপোনাৰ সন্তানসকলে সাধাৰণ ৰোগৰ পৰা সুস্থ হ’বলৈ অধিক সময় লয় নেকি?"
   },
   {
     "question_id": 12,
     "english": "Do you find it challenging to feed your children adequate nutritious  food from different food groups-  cereal, dairy, fruits and vegetables, meat,fish or pulses/beans?",
-    "assamese": "আপোনাৰ সন্তানসকলক নানা খাদ্য গোটৰ পৰা যথেষ্ট পুষ্টিকৰ আহাৰ যোগান ধৰাটো কষ্টকৰ লাগে নে?"
+    "assamese": "আপোনাৰ সন্তানসকলক নানা খাদ্য গোটৰ পৰা যথেষ্ট পুষ্টিকৰ আহাৰ যোগান ধৰাটো কষ্টকৰ লাগে নেকি?"
   },
   {
     "question_id": 13,
     "english": "Do you feel anaemic often (gender specific)? Example symptoms of anaemia include extreme fatigue, weakness, pale skin, chest pain, fast heartbeat or shortness of breath, headache, dizziness, cold hands and feet, inflammation or soreness of tongue, brittle nails etc.",
-    "assamese": "আপুনি ঘন ঘন ৰক্তহীনতা অনুভৱ কৰে নে (লিংগ বিশেষ)? উদাহৰণ স্বৰূপ: অতিমাত্রা ক্লান্তি, চকু সাদঁ, বেয়া চেঁচা, ইত্যাদি।"
+    "assamese": "আপুনি ঘনে ঘনে ৰক্তহীনতা অনুভৱ কৰে নেকি (লিংগ বিশেষ)? উদাহৰণ : অতিমাত্রা দুৰ্বল অনুভৱ কৰা, চকু সাদঁ, মূৰৰ বিষ, ইত্যাদি।"
   },
   {
     "question_id": 14,
-    "english": "Do you have a pucca home/shelter to live in that has access to basic amenities(do you live in a slum)?",
-    "assamese": "আপোনাৰ ঘৰ পকা আৰু মৌলিক সুবিধাসমূহ আছে নে (আপুনি চলাচল অঞ্চলত বাস কৰে নে)?"
+    "english": "Do you have a pucca home/shelter to live in that has access to basic amenities?",
+    "assamese": "আপোনাৰ পকাঘৰ আৰু মৌলিক সুবিধাসমূহ আছে নে (আপুনি বস্তি অঞ্চলত বাস কৰে নে)?"
   },
   {
     "question_id": 15,
     "english": "Are you able to afford rent and/or taxes and/or regular upkeep of your house?",
-    "assamese": "আপুনি ভাড়া, কৰ আৰু গৃহ সংৰক্ষণৰ খৰচ বহন কৰিবলৈ সক্ষম নে?"
+    "assamese": "আপুনি ভাড়া, কৰ আৰু ঘৰৰ নিয়মীয়া ৰক্ষণাবেক্ষণ খৰচ বহন কৰিবলৈ সক্ষম হয় নে?"
   },
   {
     "question_id": 16,
     "english": "Do you have access to electricity?(for more than 12 hours)",
-    "assamese": "আপোনাৰ ওচৰত ১২ ঘণ্টাৰো অধিক সময়লৈ বিদ্যুৎ থাকে নে?"
+    "assamese": "আপোনাৰ ঘৰত ১২ ঘণ্টাৰো অধিক সময়লৈ বিদ্যুৎ যোগান থাকে নে?"
   },
   {
     "question_id": 17,
     "english": "Do you have access to clean fuels like LPG, biogas, solar etc.  for cooking?",
-    "assamese": "আপোনাৰ ওচৰত এলপিজি, বায়োগেছ, সৌৰ শক্তি আদিৰ দৰে পৰিষ্কাৰ ইন্ধন আছে নে?"
+    "assamese": "আপোনাৰ ঘৰত এলপিজি, বায়োগেছ, সৌৰ শক্তি আদিৰ দৰে পৰিষ্কাৰ ইন্ধন আছে নে?"
   },
   {
     "question_id": 18,
     "english": "Do you own or have access to a basic mobile phone ?",
-    "assamese": "আপোনাৰ ওচৰত মৌলিক মোবাইল ফোন আছে নে?"
+    "assamese": "আপোনাৰ ঘৰত মৌলিক মোবাইল ফোন আছে নে?"
   },
   {
     "question_id": 19,
     "english": "Do you have affordable and reliable internet access?",
-    "assamese": "আপোনাৰ ওচৰত সস্তা আৰু বিশ্বাসযোগ্য ইন্টাৰনেট আছে নে?"
+    "assamese": "আপোনাৰ ঘৰত সস্তা আৰু বিশ্বাসযোগ্য ইন্টাৰনেট সেৱা আছে নে?"
   },
   {
     "question_id": 20,
     "english": "Do you have access to pucca toilets with water access and regular use?",
-    "assamese": "আপোনাৰ ওচৰত পানীৰ সুবিধাযুক্ত পকা শৌচালয় আছে নে?"
+    "assamese": "আপোনাৰ ঘৰত পানীৰ সুবিধাযুক্ত পকা শৌচালয় আছে নে?"
   },
   {
     "question_id": 21,
     "english": "Do you have regular and reliable access to clean drinking water?",
-    "assamese": "আপোনাৰ ওচৰত পৰিষ্কাৰ খাবলগীয়া পানীৰ নিৰৱিচ্ছিন্ন যোগান আছে নে?"
+    "assamese": "আপোনাৰ ঘৰত পৰিষ্কাৰ খোৱা পানীৰ নিয়মীয়া যোগান আছে নে?"
   },
   {
     "question_id": 22,
     "english": "Do you have access to transportation to meet your essential needs and to go to work?",
-    "assamese": "আপোনাৰ মৌলিক প্ৰয়োজন আৰু কামলৈ যাত্ৰা কৰিবলৈ পৰিবহণৰ সুবিধা আছে নে?"
+    "assamese": "আপোনাৰ মৌলিক প্ৰয়োজন আৰু কৰ্ম ক্ষেত্ৰলৈ যাবৰ বাবে যাতায়তৰ সুবিধা আছে নে?"
   },
   {
     "question_id": 23,
     "english": "Do you have access to public transport- bus/train/subway/ferries?",
-    "assamese": "আপোনাৰ ওচৰত চৰকাৰী পৰিবহণ (বাস, ৰেল, মেট্ৰো, আদি) সুবিধা আছে নে?"
+    "assamese": "আপোনাৰ ওচৰত চৰকাৰী পৰিবহণ (বাছ, ৰেল, মেট্ৰো, আদি) সুবিধা আছে নে?"
   },
   {
     "question_id": 24,
@@ -127,12 +163,12 @@
   {
     "question_id": 26,
     "english": "Do you have adequate support from a nurse or midwife within the community for pregnant women and new mothers?",
-    "assamese": "গৰ্ভৱতী আৰু নতুন মাতৃসকলৰ বাবে গাঁৱত প্ৰয়োজনীয় স্বাস্থ্য সহায়তা আছে নে?"
+    "assamese": "গৰ্ভৱতী আৰু নতুন মাতৃসকলৰ বাবে গাঁৱত প্ৰয়োজনীয় স্বাস্থ্য সহায়িকা আছে নে?"
   },
   {
     "question_id": 27,
     "english": "Do young mothers suffer from serious health issues such as being sick for more than a week or possible death?",
-    "assamese": "তরুণ মাতৃসকলে গম্ভীৰ স্বাস্থ্য সমস্যা (এক সপ্তাহৰো অধিক অসুস্থতা বা মৃত্যুৰ আশঙ্কা) ভোগে নে?"
+    "assamese": "নতুন মাতৃসকলে গম্ভীৰ স্বাস্থ্য সমস্যা (এক সপ্তাহৰো অধিক অসুস্থতা বা মৃত্যুৰ আশঙ্কা) ভোগে নে?"
   },
   {
     "question_id": 28,
@@ -149,7 +185,7 @@
     "english": "Do newborns and/or children under 5 years suffer from serious health issues such as being sick for more than a week or possible death?",
     "assamese": "নৱজাতক বা ৫ বছৰৰ তলত থকা শিশুসকলে গম্ভীৰ স্বাস্থ্য সমস্যা (এক সপ্তাহৰো অধিক অসুস্থতা বা মৃত্যুৰ আশঙ্কা) ভোগে নে?"
   },
-  {
+   {
     "question_id": 31,
     "english": "Do you or anyone in your household suffer from frequent serious respiratory and other viral illnesses such as being sick for more than a week or possible death?",
     "assamese": "আপুনি বা আপোনাৰ পৰিয়ালৰ কোনোবাই সপ্তাহতকৈ অধিক দিন অসুস্থ হৈ থকা বা সংকটজনক ভাইৰেল ৰোগত ভোগে নেকি?"
@@ -192,7 +228,7 @@
   {
     "question_id": 39,
     "english": "Has anyone in your household attempted, committed, or contemplated suicide?",
-    "assamese": "আপোনাৰ পৰিয়ালৰ কোনোবাই আত্মহত্যাৰ চেষ্টা কৰিছে, কৰিছে বা ভাবিছে নেকি?"
+    "assamese": "আপোনাৰ পৰিয়ালৰ কোনোবাই আত্মহত্যাৰ চেষ্টা কৰিছে, কৰিছিল বা ভাবিছিল নেকি?"
   },
   {
     "question_id": 40,
@@ -207,7 +243,7 @@
   {
     "question_id": 42,
     "english": "Are you familiar with using computers?",
-    "assamese": "আপুনি কম্পিউটাৰ ব্যৱহাৰত পৰিচিত নেকি?"
+    "assamese": "আপুনি কম্পিউটাৰ ব্যৱহাৰত কৰিব পৰে নেকি?"
   },
   {
     "question_id": 43,
@@ -237,7 +273,7 @@
   {
     "question_id": 48,
     "english": "Do children under the legal age work seasonally or regularly for wages?",
-    "assamese": "আইনী বয়সৰ তলৰ শিশুবোৰে ঋতুভিত্তিক বা নিয়মিতভাৱে মজুৰিৰ বাবে কাম কৰে নেকি?"
+    "assamese": "১৮ বয়সৰ তলৰ শিশুবোৰে ঋতুভিত্তিক বা নিয়মিতভাৱে মজুৰিৰ বাবে কাম কৰে নেকি?"
   },
   {
     "question_id": 49,
@@ -252,7 +288,7 @@
   {
     "question_id": 51,
     "english": "Do you have to bribe officials in your business?",
-    "assamese": "আপোনাৰ ব্যৱসায়ত বিষয়াসকলক ঘূষ দিবলগীয়া হয় নেকি?"
+    "assamese": "আপোনাৰ ব্যৱসায়ত বিষয়াসকলক ঘুছ দিবলগীয়া হয় নেকি?"
   },
   {
     "question_id": 52,
@@ -272,7 +308,7 @@
   {
     "question_id": 55,
     "english": "Do you frequently feel uncomfortable or sick from traffic pollution?",
-    "assamese": "ট্ৰেফিক দুষণৰ বাবে আপুনি নিয়মিত অসহজ বা অসুস্থ অনুভৱ কৰে নেকি?"
+    "assamese": "যান বাহন প্ৰদূষুণৰ বাবে আপুনি নিয়মিত কস্তকৰ বা অসুস্থ অনুভৱ কৰে নেকি?"
   },
   {
     "question_id": 56,
@@ -282,27 +318,27 @@
   {
     "question_id": 57,
     "english": "Do you frequently feel uncomfortable or sick from pollution from nearby industries?",
-    "assamese": "নিকটৱৰ্তী উদ্যোগসমূহৰ দুষণৰ বাবে আপুনি নিয়মিত অসহজ বা অসুস্থ অনুভৱ কৰে নেকি?"
+    "assamese": "নিকটৱৰ্তী উদ্যোগসমূহৰ প্ৰদূষুণৰ বাবে আপুনি নিয়মিত কস্তকৰ বা অসুস্থ অনুভৱ কৰে নেকি?"
   },
   {
     "question_id": 58,
     "english": "Do you recover/recycle/reuse household waste generated in your community?",
-    "assamese": "আপোনাৰ সমাজত উৎপন্ন গৃহস্থালিৰ আবর্জনা পুনৰ ব্যৱহাৰ/পুনঃচক্রিত/পুনৰুদ্ধাৰ কৰা হয় নেকি?"
+    "assamese": "আপোনাৰ সমাজত উৎপন্ন গৃহস্থলিৰ আবর্জনা পুনৰ ব্যৱহাৰ/পুনঃচক্রিত/পুনৰুদ্ধাৰ কৰা হয় নেকি?"
   },
   {
     "question_id": 59,
     "english": "Do you think the water bodies (including marine if applicable) in your community are polluted?",
-    "assamese": "আপোনাৰ সমাজত থকা পানী সংস্থাপন (সামুদ্রিক সন্নিৱিষ্ট) দুষিত বুলি আপুনি ভাবে নেকি?"
+    "assamese": "আপোনাৰ সমাজত থকা পানী সংস্থাপন (সামুদ্রিক সন্নিৱিষ্ট সাঙুৰি) দুষিত বুলি আপুনি ভাবে নেকি?"
   },
   {
     "question_id": 60,
     "english": "Are forests in your community being destroyed by human activities?",
-    "assamese": "আপোনাৰ সমাজৰ জংলসমূহ মানুহৰ কাৰ্যকলাপৰ বাবে ধ্বংস হ’ব ধৰিছে নেকি?"
+    "assamese": "আপোনাৰ সমাজৰ জংঘল সমূহ মানুহৰ কাৰ্যকলাপৰ বাবে ধ্বংস হ’ব ধৰিছে নেকি?"
   },
   {
     "question_id": 61,
     "english": "Is the land you own becoming increasingly unusable?",
-    "assamese": "আপোনাৰ নিজা মাটি দিনে দিনে অধিক অকৃষি আৰু ব্যৱহাৰ অযোগ্য হ’ব লগা হৈছে নেকি?"
+    "assamese": "আপোনাৰ নিজা মাটি দিনে দিনে অধিক অকৃষি আৰু ব্যৱহাৰ অযোগ্য হ’বলৈ ধৰিছে নেকি?"
   },
   {
     "question_id": 62,
@@ -327,7 +363,7 @@
   {
     "question_id": 66,
     "english": "Do you use or are you aware if you are being provided with electricity from fossil fuel?",
-    "assamese": "আপুনি খনিজ ইন্ধনৰ পৰা বিদ্যুৎ ব্যৱহাৰ কৰে নে বা এই বিষয়ে জনা আছে নে?"
+    "assamese": "আপুনি খনিজ ইন্ধনৰ পৰা বিদ্যুৎ ব্যৱহাৰ কৰেনে বা এই বিষয়ে জনা আছেনে?"
   },
   {
     "question_id": 67,
@@ -362,7 +398,7 @@
   {
     "question_id": 73,
     "english": "Do women and girls face discrimination in accessing higher education of their choice?",
-    "assamese": "মহিলা আৰু ছাত্ৰীবোৰে নিজৰ পছন্দৰ উচ্চ শিক্ষালাভত বৈষম্যৰ সন্মুখীন হয় নে?"
+    "assamese": "মহিলা আৰু ছাত্ৰীবোৰে নিজৰ পছন্দৰ উচ্চ শিক্ষা লাভত বৈষম্যৰ সন্মুখীন হয় নে?"
   },
   {
     "question_id": 74,
@@ -387,7 +423,7 @@
   {
     "question_id": 78,
     "english": "Are married women allowed to visit their families?",
-    "assamese": "বিবাহিত মহিলাসকলক নিজৰ পৰিয়াললৈ যাওঁৰ অনুমতি দিয়া হয় নে?"
+    "assamese": "বিবাহিত মহিলাসকলক নিজৰ পৰিয়াললৈ যাৱলৈ অনুমতি দিয়া হয় নে?"
   },
   {
     "question_id": 79,
@@ -442,6 +478,6 @@
   {
     "question_id": 89,
     "english": "Do you believe that your children should go outside for higher education to have a better quality of life?",
-    "assamese": "আপুনি বিশ্বাস কৰে নে যে আপোনাৰ সন্তানসকলে উন্নত জীৱনমানৰ বাবে উচ্চ শিক্ষা লাভ কৰিবলৈ বাহিৰলৈ যাওঁ উচিত?"
+    "assamese": "আপুনি বিশ্বাস কৰে নে যে আপোনাৰ সন্তানসকলে উন্নত জীৱনমানৰ বাবে উচ্চ শিক্ষা লাভ কৰিবলৈ বাহিৰলৈ যোৱা উচিত?"
   }
 ]

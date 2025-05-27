@@ -36,6 +36,7 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
     private val pageSize = 10
     private var isTranslated = false // default language is English
     private val answers = mutableMapOf<Int, String>()  // questionId to response
+    private var volunteerName: String? = null
 
     private var membershipId: String? = null
     private var phoneNumber: String? = null
@@ -51,6 +52,8 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
 
         membershipId = arguments?.getString("membership_id")
         phoneNumber = arguments?.getString("phone_number")
+        volunteerName = arguments?.getString("volunteer_name")
+        Log.d("QuestFragment", "Volunteer Name: $volunteerName")
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -67,12 +70,12 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
 
         btnNext.setOnClickListener {
             saveCurrentAnswers()
-            if ((currentPage + 1) * pageSize < questions.size) {
+            val nextStartIndex = if (currentPage == 0) 6 else 6 + currentPage * pageSize
+            if (nextStartIndex < questions.size) {
                 currentPage++
                 setupPagination()
             }
         }
-
         btnTranslate.setOnClickListener {
             isTranslated = !isTranslated
             btnTranslate.text = if (isTranslated) "Translate to English" else "অসমীয়ালৈ অনুবাদ কৰক"
@@ -90,7 +93,7 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
 
 
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "Responses saved!", Toast.LENGTH_SHORT).show()
+                    showDialog("Responses saved!")
                     val bundle = Bundle().apply {
                         putString("volunteer_phone_number", phoneNumber)
                     }
@@ -125,11 +128,26 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
     }
 
     private fun setupPagination() {
-        val start = currentPage * pageSize
-        val end = minOf(start + pageSize, questions.size)
+        val start: Int
+        val end: Int
+
+        if (currentPage == 0) {
+            // Special case: page 1 shows only first 6 questions
+            start = 0
+            end = minOf(6, questions.size)
+        } else {
+            // Other pages: normal pagination of 10 per page
+            start = 6 + (currentPage - 1) * pageSize
+            end = minOf(start + pageSize, questions.size)
+        }
+
         val pageQuestions = questions.subList(start, end)
         questionAdapter = QuestionAdapter(pageQuestions, answers, isTranslated)
         recyclerView.adapter = questionAdapter
+
+        // Optionally disable/enable Prev/Next buttons based on page
+        btnPrev.isEnabled = currentPage > 0
+        btnNext.isEnabled = end < questions.size
     }
 
     private suspend fun sendAnswersToBackend() {
@@ -146,6 +164,7 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
             put("action", "submit_questionnaire")
             put("membership_id", membershipId ?: "")
             put("phone_number", phoneNumber ?: "")
+            put("volunteer_name", volunteerName ?: "")
             put("responses", responseArray)
         }
 
@@ -180,6 +199,7 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
         val responseObj = JSONObject().apply {
             put("membership_id", membershipId ?: "")
             put("phone_number", phoneNumber ?: "")
+            put("volunteer_name", volunteerName ?: "")
 
             val responseArray = JSONArray()
             for ((qid, response) in answers) {
@@ -228,15 +248,17 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
 
                 for (i in 0 until jsonArray.length()) {
                     val entry = jsonArray.getJSONObject(i)
-
+                    val volunteerName = entry.optString("volunteer_name", "") // ✅ retrieve it
                     val membershipId = entry.optString("membership_id", "")
                     val phoneNumber = entry.optString("phone_number", "")
                     val responses = entry.optJSONArray("responses") ?: continue
+
 
                     val fullPayload = JSONObject().apply {
                         put("action", "submit_questionnaire")
                         put("membership_id", membershipId)
                         put("phone_number", phoneNumber)
+                        put("volunteer_name", volunteerName) // ✅ add it
                         put("responses", responses)
                     }
 
@@ -257,7 +279,7 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
                 if (allSynced) {
                     file.delete()
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "All offline responses synced", Toast.LENGTH_SHORT).show()
+                        showDialog("All offline responses synced")
                     }
                 }
             }
@@ -271,6 +293,14 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
     private fun isOnline(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as android.net.ConnectivityManager
         return cm.activeNetworkInfo?.isConnectedOrConnecting == true
+    }
+    private fun showDialog(message: String) {
+        val dialog = android.app.AlertDialog.Builder(requireContext())
+            .setMessage(message)
+            .setCancelable(false)
+            .setPositiveButton("OK") { dialogInterface, _ -> dialogInterface.dismiss() }
+            .create()
+        dialog.show()
     }
 }
 

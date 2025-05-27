@@ -33,6 +33,7 @@ class OfflineSyncWorker(appContext: Context, workerParams: WorkerParameters) :
                         put("action", "submit_questionnaire")
                         put("membership_id", json.optString("membership_id", ""))
                         put("phone_number", json.optString("phone_number", ""))
+                        put("volunteer_name", json.optString("volunteer_name", ""))
                         put("responses", json.optJSONArray("responses") ?: JSONArray())
                     }
 

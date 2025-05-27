@@ -11,5 +11,6 @@ data class RegisterHouseholdRequest(
     val members: List<Member>,
     val phone_number: String,
     val latitude: Double? = null,                // Optional: can be passed if location captured
-    val longitude: Double? = null  // To pass volunteer's phone for validation
+    val longitude: Double? = null,  // To pass volunteer's phone for validation
+    val volunteer_name: String // ✅ Add this field
 )

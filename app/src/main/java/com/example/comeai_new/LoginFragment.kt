@@ -1,5 +1,6 @@
 package com.example.comeai_new
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,8 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.comeai_new.network.ApiClient
 import com.example.comeai_new.models.LoginResponse
 import kotlinx.coroutines.Dispatchers
@@ -21,9 +24,10 @@ class LoginFragment : Fragment() {
 
     private lateinit var phoneNumberEditText: EditText
     private lateinit var btnLogin: Button
+    private lateinit var nameEditText: EditText
 
     private val PREFS_NAME = "volunteer_cache"
-    private val KEY_VOLUNTEERS = "volunteer_phone_numbers"
+    private val KEY_VOLUNTEERS =  "volunteer_json"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,32 +35,49 @@ class LoginFragment : Fragment() {
     ): View = inflater.inflate(R.layout.fragment_login, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+      //  enqueueOfflineSyncWorker(requireContext())
+        context?.let {
+            WorkManager.getInstance(it).enqueue(
+                OneTimeWorkRequestBuilder<OfflineSyncWorker>().build()
+            )
+        }
         super.onViewCreated(view, savedInstanceState)
         val toolbarTitle = requireActivity().findViewById<TextView>(R.id.toolbarTitle)
         toolbarTitle?.text = "Login"
 
         phoneNumberEditText = view.findViewById(R.id.etPhoneNumber)
+        nameEditText = view.findViewById(R.id.etName)
         btnLogin = view.findViewById(R.id.btnLogin)
 
         btnLogin.setOnClickListener {
             val phoneNumber = phoneNumberEditText.text.toString().trim()
+
+            val name = nameEditText.text.toString().trim()
+
             if (phoneNumber.isEmpty() || !phoneNumber.matches(Regex("\\d{10}"))) {
-                showToast("Enter a valid 10-digit phone number")
+                showDialog("Invalid Phone Number", "Please enter a valid 10-digit phone number.")
+                return@setOnClickListener
+            }
+
+            if (name.isEmpty()) {
+                showDialog("Missing Name", "Please enter your full name.")
                 return@setOnClickListener
             }
 
             if (isOnline(requireContext())) {
-                loginUserOnline(phoneNumber)
+                loginUserOnline(phoneNumber, name)
             } else {
                 loginUserOffline(phoneNumber)
             }
+
         }
     }
 
-    private fun loginUserOnline(phoneNumber: String) {
+    private fun loginUserOnline(phoneNumber: String, name: String) {
         val jsonObject = JSONObject().apply {
             put("action", "volunteer_login")
             put("phone_number", phoneNumber)
+            put("name", name)
         }
 
         val requestBody = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
@@ -71,16 +92,17 @@ class LoginFragment : Fragment() {
                         if (loginResponse?.message == "Volunteer login successful" &&
                             loginResponse.volunteerId != null
                         ) {
-                            showToast("Login Successful!")
+                            showDialog("Login Successful", "Welcome!")
 
-                            cacheVolunteerPhone(phoneNumber)
+                            cacheVolunteerPhone(phoneNumber, name)
 
                             val bundle = Bundle().apply {
                                 putString("volunteer_phone_number", phoneNumber)
+                                putString("volunteer_name", name)
                             }
                             findNavController().navigate(R.id.action_loginFragment_to_membershipFragment, bundle)
                         } else {
-                            showToast("Invalid Credentials!")
+                            showDialog("Login Failed", "Invalid Credentials. Please try again.")
                         }
                     } else {
                         handleErrorResponse(response.errorBody()?.string())
@@ -88,7 +110,7 @@ class LoginFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    showToast("Error: ${e.message}")
+                    showDialog("Error", e.message ?: "Unknown Error Occurred.")
                 }
             }
         }
@@ -96,25 +118,31 @@ class LoginFragment : Fragment() {
 
     private fun loginUserOffline(phoneNumber: String) {
         val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val cachedSet = prefs.getStringSet(KEY_VOLUNTEERS, emptySet())
+        val jsonString = prefs.getString(KEY_VOLUNTEERS, "{}") ?: "{}"
+        val json = JSONObject(jsonString)
 
-        if (cachedSet?.contains(phoneNumber) == true) {
-            showToast("Offline Login Successful!")
+
+        if (json.has(phoneNumber)) {
+            val name = json.getString(phoneNumber)  // 👈 retrieve volunteer name by phone number
+
+            showDialog("Offline Login Successful", "Proceeding offline.")
 
             val bundle = Bundle().apply {
                 putString("volunteer_phone_number", phoneNumber)
+                putString("volunteer_name", name)
             }
             findNavController().navigate(R.id.action_loginFragment_to_membershipFragment, bundle)
         } else {
-            showToast("No offline record found. Please login once online.")
+            showDialog("Offline Login Failed", "No offline record found. Please login once online.")
         }
     }
 
-    private fun cacheVolunteerPhone(phoneNumber: String) {
+    private fun cacheVolunteerPhone(phoneNumber: String,name: String) {
         val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val set = prefs.getStringSet(KEY_VOLUNTEERS, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
-        set.add(phoneNumber)
-        prefs.edit().putStringSet(KEY_VOLUNTEERS, set).apply()
+        val jsonString  = prefs.getString(KEY_VOLUNTEERS, "{}") ?: "{}"
+        val json = JSONObject(jsonString)
+        json.put(phoneNumber, name)
+        prefs.edit().putString(KEY_VOLUNTEERS, json.toString()).apply()
     }
 
 
@@ -123,19 +151,22 @@ class LoginFragment : Fragment() {
             try {
                 val jsonObject = JSONObject(errorBody)
                 val errorMessage = jsonObject.optString("message", "Login failed. Try again.")
-                showToast(errorMessage)
+                showDialog("Login Failed", errorMessage)
             } catch (e: Exception) {
-                showToast("Error parsing response")
+                showDialog("Error", "Error parsing server response.")
             }
         } else {
-            showToast("Unknown error occurred.")
+            showDialog("Unknown Error", "Please try again.")
         }
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    private fun showDialog(title: String, message: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("OK", null)
+            .show()
     }
-
     private fun isOnline(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as android.net.ConnectivityManager
         return cm.activeNetworkInfo?.isConnectedOrConnecting == true

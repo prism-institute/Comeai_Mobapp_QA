@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 class QuestionAdapter(
     private val questions: List<Question>,
     private val answers: MutableMap<Int, String>,
-    private val isTranslated: Boolean           
+    private val isTranslated: Boolean                 
 ) : RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
 
     private val localAnswers = mutableMapOf<Int, String>()
